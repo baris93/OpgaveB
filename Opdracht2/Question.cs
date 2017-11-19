@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Opdracht2
 {
-    class Question
+    public class Question
     {
         public int Difficulty { get; set; }
         public string Category { get; set; }
