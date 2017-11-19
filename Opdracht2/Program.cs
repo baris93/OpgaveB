@@ -11,7 +11,6 @@ namespace Opdracht2
             Program program = new Program();
 
 
-            //Commits
             IList<Question> questions = new List<Question>()
             {
                 new Question() { Category = "History", Difficulty = 2, Text = "In which year did the first World War Start ?", Answer = "1914"},
