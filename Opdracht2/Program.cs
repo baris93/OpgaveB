@@ -21,7 +21,16 @@ namespace Opdracht2
                 new Question() { Category = "Sport", Difficulty = 1, Text = "How many basketball teams are located in Los Angeles that play in the NBA? ", Answer = "2"},
                 new Question() { Category = "History", Difficulty = 2, Text = "In what year was the UN founded ? ", Answer = "1945"},
                 new Question() { Category = "Science", Difficulty = 3, Text = "What is the name of our planet ? ", Answer = "Earth"},
+
+                 new Question() {Difficulty = 2, Category = "Sport", Text = "Who is the fastest runner ever ? ",Answers = { "George Bush", "Usain Bolt", "Bill Gates", "LeBron James" },
+                choicequestion = new ChoiceQuestion(){ CorrectAnswer = "Usain Bolt"}},
+            new Question() { Difficulty = 2, Category = "Tech", Text = "Who founded Apple ? ",Answers = { "Steve Jobs","Kobe Bryant", "Steve Nash", "Leonardo da vinci" },
+                choicequestion = new ChoiceQuestion(){ CorrectAnswer = "Steve Jobs"}},
+            new Question() { Difficulty = 3, Category = "History", Text = "What is the age of the Earth ? ",Answers = { "2017","4.6 Billion Years", "40,000 years", "We Live in a simulation" },
+                choicequestion = new ChoiceQuestion(){ CorrectAnswer = "4.6 Billion Years"}}
             };
+
+
 
             
             Console.WriteLine("Do you want to play based on difficulty or category ? \nfor Difficulty press 1, for Category press 2");
@@ -50,7 +59,7 @@ namespace Opdracht2
 
             if (choice2 == "1")
             {
-                Console.WriteLine("Choose difficulty 1 2 3");
+                Console.WriteLine("Choose difficulty: 1, 2 or 3");
                 String DiffChoice = Console.ReadLine();
                 int asd = Int32.Parse(DiffChoice);
                 IEnumerable<Question> result = questions.Where(x => x.Difficulty==asd);
@@ -58,7 +67,7 @@ namespace Opdracht2
             }
             else if(choice2 == "2")
             {
-                Console.WriteLine("Choose difficulty 1 2 3");
+                Console.WriteLine("Choose Category: Sport, Science, History, Tech");
                 String CatChoice = Console.ReadLine();
                 IEnumerable<Question> result = questions.Where(x => x.Category == CatChoice);
                 program.Play(result);
@@ -76,28 +85,40 @@ namespace Opdracht2
             string failed = "";
             foreach (var z in results)
             {
-                if (z.GetType() == typeof(ChoiceQuestion))
+                if (z.choicequestion != null)
                 {
-                 
-                }
+                    Console.WriteLine(z.Text);
+                    z.GetChoiceQuestions();
+                    var answer = Console.ReadLine();
+                    int input = Int32.Parse(answer);
 
-                z.Display();
-                String userAnswer = Console.ReadLine();
-                Console.WriteLine(z.checkAnswer(userAnswer));
-                if (z.checkAnswer(userAnswer))
-                {
-                    score++;
+                    Console.WriteLine(z.checkChoiceAnswer(input));
+                    if (z.checkChoiceAnswer(input) == true)
+                    {
+                        score++;
+                    }
+
                 }
                 else
                 {
-                    failed += "\n" + z.Text;
+                    z.Display();
+                    String userAnswer = Console.ReadLine();
+                    Console.WriteLine(z.checkAnswer(userAnswer));
+                    if (z.checkAnswer(userAnswer))
+                    {
+                        score++;
+                    }
+                    else
+                    {
+                        failed += "\n" + z.Text;
+                    }
                 }
             }
                 Console.WriteLine("Your Score is: " + score.ToString());
                 Console.WriteLine("\n");
-                Console.WriteLine("These were your wrong questions: " + failed);
-            
+                Console.WriteLine("These were your wrong questions: " + failed);            
         }
+
 
     }
 }
